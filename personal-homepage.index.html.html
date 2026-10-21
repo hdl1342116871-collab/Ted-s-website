@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafaf9">
+  <meta name="description" content="个人主页：关于我、AI 项目、产品知识库、GitHub 与合作联系。">
+  <title>你的名字 · 个人主页</title>
+  <style>
+    /* 全部样式、插画和交互均包含在本文件中，无需外部依赖。 */
+    :root{--bg:#fafaf9;--paper:#fff;--ink:#171719;--muted:#717178;--line:#e8e8e7;--soft:#f1f2f0;--accent:#216b50;--radius:24px;--width:1160px;--nav-height:76px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-height) + 24px)}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+    body,button,a{-webkit-tap-highlight-color:transparent}
+    button,input{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #76a58b;outline-offset:6px}
+    ::selection{background:#dce9dd}h1,h2,h3,p{margin:0}img,svg{display:block;max-width:100%}[hidden]{display:none!important}
+    .container{width:min(var(--width),calc(100% - 64px));margin-inline:auto}
+    .section{padding:108px 0;border-top:1px solid var(--line)}
+    .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:23px;height:1px;background:currentColor}
+    .section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:44px}
+    .section-heading h2,.large-heading{font-size:clamp(30px,4vw,48px);line-height:1.22;letter-spacing:-.045em;font-weight:650}
+    .section-description{max-width:320px;color:var(--muted);font-size:14px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:48px;padding:12px 22px;border:1px solid var(--ink);border-radius:100px;background:var(--ink);color:#fff;font-size:13px;font-weight:550;transition:transform .2s,background .2s,box-shadow .2s}
+    .button:hover{transform:translateY(-2px);background:#343436;box-shadow:0 8px 20px #0000000d}
+    .button.secondary{color:var(--ink);background:transparent;border-color:#d7d7d6}.button.secondary:hover{background:#fff}
+    .text-link{display:inline-flex;align-items:center;gap:16px;min-height:44px;font-size:13px;font-weight:600}.text-link span{transition:transform .2s}.text-link:hover span{transform:translate(3px,-3px)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 11px;border:1px solid var(--line);border-radius:100px;font-size:11px;color:var(--muted)}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+    .skip-link{position:fixed;top:-100px;left:20px;z-index:100;padding:12px 20px;border-radius:10px;background:var(--ink);color:white}.skip-link:focus{top:16px}
+    /* 01 固定导航 */
+    .site-header{position:fixed;inset:0 0 auto;z-index:50;background:rgba(250,250,249,.88);border-bottom:1px solid #0000000f;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:var(--nav-height)}
+    .brand{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:750;letter-spacing:-.5px}
+    .brand-mark{display:grid;place-items:center;width:29px;height:29px;color:#fff;background:var(--ink);border-radius:9px;font-size:18px;font-weight:400}
+    .nav-links{display:flex;align-items:center;gap:27px}.nav-links a{color:#68686e;font-size:12px;transition:color .2s}.nav-links a:hover{color:#111}
+    .nav-links .nav-contact{color:#fff;background:var(--ink);border-radius:100px;padding:9px 18px}
+    .menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid var(--line);border-radius:50%}
+    .menu-lines,.menu-lines::before,.menu-lines::after{width:16px;height:1px;background:var(--ink);position:relative;transition:transform .2s}
+    .menu-lines::before,.menu-lines::after{content:"";position:absolute;left:0}.menu-lines::before{top:-5px}.menu-lines::after{top:5px}
+    .menu-toggle[aria-expanded="true"] .menu-lines{background:transparent}.menu-toggle[aria-expanded="true"] .menu-lines::before{top:0;transform:rotate(45deg)}.menu-toggle[aria-expanded="true"] .menu-lines::after{top:0;transform:rotate(-45deg)}
+    /* 02 首屏 IP 形象 */
+    .hero{padding-top:calc(var(--nav-height) + 74px);padding-bottom:30px}
+    .hero-meta{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:52px;color:var(--muted);font-size:10px;letter-spacing:.12em}
+    .hero-layout{display:grid;grid-template-columns:1.12fr 1fr;gap:68px;align-items:center}
+    .hero h1{margin:24px 0;font-size:clamp(46px,5.6vw,76px);font-weight:650;letter-spacing:-.065em;line-height:1.16}.hero h1 .quiet{color:#9b9b9e}
+    .hero-intro{color:var(--muted);font-size:15px;max-width:390px;line-height:1.95}.hero-intro strong{color:var(--ink);font-weight:500}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}.hero-note{margin-top:30px;color:#8c8c91;font-size:11px}
+    .portrait{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:1/1.08;border:1px solid #e4e5e1;border-radius:28px;background:radial-gradient(ellipse at 45% 30%,#fff 0%,#eff0eb 55%,#e3e5dd 100%)}
+    .portrait::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#aeb5a01c 1px,transparent 1px),linear-gradient(90deg,#aeb5a01c 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(#0007,transparent)}
+    .portrait-top{position:absolute;z-index:2;top:24px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;color:#6e7566;font-size:10px;letter-spacing:.1em}
+    .portrait-art{position:absolute;width:100%;height:100%;inset:0}
+    .portrait-label{position:absolute;left:22px;right:22px;bottom:22px;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 18px;background:#ffffffce;border:1px solid #fff;border-radius:16px;backdrop-filter:blur(14px)}
+    .portrait-label strong{display:block;font-size:14px;font-weight:600}.portrait-label small{display:block;color:var(--muted);font-size:10px;letter-spacing:.06em;margin-top:3px}
+    .portrait-arrow{display:grid;place-items:center;width:34px;height:34px;border:1px solid #ddd;border-radius:50%}
+    .hero-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-top:56px;padding-bottom:10px;color:#8b8b90;font-size:10px;letter-spacing:.08em}.hero-topics{display:flex;gap:24px;flex-wrap:wrap}
+    /* 03 个人介绍 */
+    .about-layout{display:grid;grid-template-columns:1fr 1.25fr;gap:100px}.about-copy{font-size:17px;line-height:1.95;color:#606067}.about-copy p+p{margin-top:20px}.about-copy strong{color:var(--ink);font-weight:550}
+    .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:38px}.principle{padding-top:18px;border-top:1px solid var(--line)}.principle span{display:block;font-size:10px;color:#999;margin-bottom:8px}.principle h3{font-size:14px;font-weight:550}
+    /* 04 AI 项目 */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+    .project{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .25s,box-shadow .25s}.project:hover{transform:translateY(-5px);box-shadow:0 16px 38px #00000006}
+    .project-visual{height:232px;display:grid;place-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}.visual-green{background:#edf1e9}.visual-blue{background:#edf0f7}.visual-orange{background:#f6eee7}
+    .visual-index{position:absolute;top:16px;left:18px;font-size:10px;color:#7d8478;letter-spacing:.08em}
+    .mini-window{width:74%;padding:15px;background:#ffffffde;border:1px solid #fff;border-radius:13px;box-shadow:0 12px 30px #26342d0c;transform:rotate(-5deg)}
+    .window-top{display:flex;gap:4px;padding-bottom:13px;border-bottom:1px solid #eee}.window-top i{width:5px;height:5px;border-radius:50%;background:#d1d8cc}
+    .mini-chat{margin-top:12px;padding:10px;border-radius:8px;background:#f0f3ec;font-size:10px;color:#65705f}.mini-chat.answer{width:88%;background:#fff;border:1px solid #e9ece5}.mini-line{height:4px;margin:7px 0;border-radius:5px;background:#c9d2c0}
+    .flow{display:flex;align-items:center;gap:12px;transform:rotate(-8deg)}.flow-node{display:grid;place-items:center;width:53px;height:59px;border:1px solid #fff;border-radius:15px;background:#ffffffd9;box-shadow:0 10px 20px #58678c0a;color:#5c6b91;font-size:24px}.flow-node.center{width:68px;height:78px;background:#283752;color:#fff;font-size:18px}.flow-connector{width:14px;height:1px;background:#aeb9cf}
+    .note-stack{position:relative;width:142px;height:156px}.note-stack::before,.note-stack::after{content:"";position:absolute;inset:0;border-radius:12px;background:#e4d2bf;transform:rotate(-14deg)}.note-stack::after{background:#ecdcc9;transform:rotate(8deg)}
+    .note-front{position:relative;z-index:1;height:100%;padding:20px;border:1px solid #fff;border-radius:12px;background:#fffaf3;transform:rotate(-3deg)}.note-front b{display:block;margin-bottom:16px;font-family:Georgia,serif;font-size:24px;font-weight:400;color:#9b7551}.note-front .mini-line{background:#e4d5c5}
+    .project-content{padding:25px}.project-category{font-size:10px;letter-spacing:.1em;color:var(--muted)}.project h3{margin-top:9px;margin-bottom:10px;font-size:21px;letter-spacing:-.03em;font-weight:600}.project p{font-size:13px;color:var(--muted);line-height:1.85}
+    .project-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px}.project-tags span{padding:4px 9px;background:#f5f5f3;border-radius:6px;font-size:10px;color:#747479}
+    .project details{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}.project summary{font-size:12px;font-weight:550;cursor:pointer}.project details p{margin-top:12px;font-size:12px}
+    /* 05 产品知识库 */
+    .knowledge-list{border-top:1px solid var(--line)}.knowledge-item{border-bottom:1px solid var(--line)}
+    .knowledge-item summary{display:grid;grid-template-columns:55px 120px 1fr 30px;align-items:center;gap:24px;padding:26px 6px;cursor:pointer;list-style:none}.knowledge-item summary::-webkit-details-marker{display:none}
+    .knowledge-number{font-size:12px;color:#a1a1a5;font-variant-numeric:tabular-nums}.knowledge-category{font-size:11px;color:var(--muted)}.knowledge-title{font-size:17px;font-weight:500;letter-spacing:-.02em}.knowledge-plus{justify-self:end;font-size:23px;font-weight:300;transition:transform .2s}.knowledge-item[open] .knowledge-plus{transform:rotate(45deg)}.knowledge-body{max-width:780px;padding:0 32px 28px 229px;color:var(--muted);font-size:14px;line-height:1.9}
+    /* 06 GitHub */
+    .github-panel{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:70px;padding:54px;color:#f5f5f5;border-radius:28px;background:#1b1c1e;overflow:hidden;position:relative}.github-panel::after{content:"";position:absolute;width:350px;height:350px;right:-160px;top:-170px;border:1px solid #ffffff0b;border-radius:50%;box-shadow:0 0 0 50px #ffffff02,0 0 0 100px #ffffff02;pointer-events:none}
+    .github-panel .eyebrow{color:#96989c}.github-panel h2{margin-bottom:20px}.github-panel p{color:#a5a7ab;font-size:14px;max-width:350px}.github-panel .button{margin-top:28px;background:#fff;color:#191919;border-color:#fff}
+    .code-window{min-width:0;border:1px solid #3b3c3e;border-radius:15px;background:#232427;transform:rotate(2deg)}.code-title{display:flex;align-items:center;gap:6px;padding:14px 18px;border-bottom:1px solid #37383b}.code-title i{width:7px;height:7px;background:#54555a;border-radius:50%}.code-title span{margin-left:10px;color:#8d9097;font-family:monospace;font-size:10px}
+    .code-window pre{margin:0;padding:24px;overflow-x:auto;color:#e0e2e6;font:12px/2 "SFMono-Regular",Consolas,monospace}.syntax-purple{color:#c4aff1}.syntax-green{color:#b9d5b5}.syntax-gray{color:#81858e}
+    /* 07 合作联盟 */
+    .alliance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.alliance-card{padding:30px;border:1px solid var(--line);border-radius:20px;background:#ffffff80}.alliance-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:28px;background:var(--soft);border-radius:12px;font-size:22px}.alliance-card h3{margin-bottom:12px;font-size:17px;font-weight:550}.alliance-card p{color:var(--muted);font-size:13px;line-height:1.85}.alliance-card .text-link{margin-top:20px;font-size:12px}
+    /* 08 联系方式 */
+    .contact{text-align:center;padding:100px 0 110px;background:#f0f1ed}.contact .eyebrow{justify-content:center}.contact h2{font-size:clamp(36px,5.4vw,66px);letter-spacing:-.055em;line-height:1.23;font-weight:600}.contact-description{margin:22px auto 32px;max-width:480px;color:var(--muted);font-size:14px}.email-link{display:inline-block;font-size:clamp(19px,3.5vw,32px);letter-spacing:-.03em;border-bottom:1px solid #bfc4ba;overflow-wrap:anywhere}.contact-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:28px}.contact-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 24px;margin-top:32px;font-size:11px;color:#7e8378}
+    /* 09 页脚版权 */
+    .site-footer{padding:28px 0;background:var(--bg)}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;color:#929296;font-size:10px}.footer-brand{display:flex;align-items:center;gap:10px;color:#66666c}.footer-brand .brand-mark{width:22px;height:22px;border-radius:7px;font-size:14px}.footer-links{display:flex;align-items:center;gap:20px}
+    .toast{position:fixed;left:50%;bottom:28px;z-index:100;width:max-content;max-width:calc(100% - 32px);padding:12px 20px;border-radius:12px;background:#1b1c1e;color:white;font-size:13px;box-shadow:0 8px 35px #0002;opacity:0;pointer-events:none;transform:translate(-50%,15px);transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+    /* 平板和手机适配 */
+    @media(max-width:1000px){.nav-links{gap:17px}.hero-layout{gap:36px}.about-layout{gap:50px}.github-panel{gap:32px;padding:38px}.project-content{padding:20px}.project-visual{height:200px}.flow{gap:7px}.flow-node{width:42px}.flow-node.center{width:54px}.alliance-card{padding:24px}}
+    @media(max-width:760px){
+      :root{--nav-height:68px}.container{width:min(var(--width),calc(100% - 40px))}.section{padding:70px 0}.nav-inner{flex-wrap:wrap;gap:0}.brand{min-height:var(--nav-height)}.nav-links{width:100%;padding:8px 0 20px;flex-wrap:wrap;gap:15px 22px}.nav-links a{font-size:13px;padding-block:6px}
+      html.js .menu-toggle{display:inline-flex}html.js .nav-links{display:none}html.js .nav-links.open{display:flex}html:not(.js) .site-header{position:sticky}html:not(.js) .hero{padding-top:30px}
+      .hero{padding-top:calc(var(--nav-height) + 32px);padding-bottom:24px}.hero-meta{margin-bottom:32px;font-size:9px}.hero-layout{grid-template-columns:1fr;gap:38px}.hero h1{font-size:clamp(45px,10vw,70px);margin-top:20px}.hero-intro{max-width:480px;font-size:14px}.hero-note{margin-top:23px}.portrait{width:100%;aspect-ratio:1.12/1;max-height:480px}.hero-bottom{padding-top:32px;font-size:9px}.hero-topics{gap:13px}
+      .section-heading{align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:30px}.section-description{max-width:100%}.eyebrow{margin-bottom:17px}.about-layout{grid-template-columns:1fr;gap:28px}.about-copy{font-size:15px}.projects-grid,.alliance-grid{grid-template-columns:1fr;gap:20px}.project-visual{height:250px}.project-content{padding:25px}.mini-window{width:65%;max-width:280px}.flow{gap:16px}.flow-node{width:60px;height:65px}.flow-node.center{width:75px;height:85px}
+      .knowledge-item summary{grid-template-columns:28px 1fr 25px;gap:13px;padding:23px 0}.knowledge-category{display:none}.knowledge-title{font-size:15px}.knowledge-body{padding:0 20px 25px 41px;font-size:13px}.github-panel{grid-template-columns:1fr;gap:36px;padding:30px 24px}.code-window{transform:none}.code-window pre{padding:20px 16px;font-size:11px}.alliance-card{padding:28px}.alliance-icon{margin-bottom:20px}.contact{padding:76px 0}.footer-inner{flex-direction:column;align-items:flex-start;gap:15px}.footer-links{width:100%;justify-content:space-between}
+    }
+    @media(max-width:380px){.container{width:calc(100% - 32px)}.hero-meta{letter-spacing:0}.hero h1{font-size:42px}.hero-actions .button{padding-inline:18px}.hero-topics{gap:8px}.portrait-label{left:14px;right:14px;bottom:14px}.principles{gap:10px}.principle h3{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}.project:hover,.button:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主要内容</a>
+  <!-- 01 / 头部导航栏 -->
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="返回首页"><span class="brand-mark" aria-hidden="true">✳</span><span data-profile="brand">YOUR NAME.</span></a>
+      <button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-controls="main-navigation" aria-expanded="false"><span class="menu-lines" aria-hidden="true"></span></button>
+      <nav class="nav-links" id="main-navigation" aria-label="主导航"><a href="#about">关于我</a><a href="#projects">AI 项目</a><a href="#knowledge">产品知识库</a><a href="#github">GitHub</a><a href="#alliance">合作联盟</a><a class="nav-contact" href="#contact">联系我 ↗</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <!-- 02 / 首屏 IP 形象区 -->
+    <section class="hero container" id="home" aria-labelledby="hero-title">
+      <div class="hero-meta"><span>INDEPENDENT CREATOR / PERSONAL SPACE</span><span>保持好奇，持续创造 ↗</span></div>
+      <div class="hero-layout">
+        <div>
+          <span class="pill"><span class="dot" aria-hidden="true"></span><span data-profile="status">开放交流与合作</span></span>
+          <h1 id="hero-title">把想法，<br><span class="quiet">做成</span>作品<span style="color:#8c9b7b">。</span></h1>
+          <p class="hero-intro">你好，我是 <strong data-profile="name">你的名字</strong>。<br><span data-profile="tagline">用 AI 探索可能，用产品思维创造价值。</span><br>这里记录我的项目、思考，以及正在发生的创造。</p>
+          <div class="hero-actions"><a class="button" href="#projects">探索我的项目 <span aria-hidden="true">↗</span></a><a class="button secondary" href="#about">认识一下 <span aria-hidden="true">↓</span></a></div>
+          <p class="hero-note">AI 探索者 · 产品创造者 · 长期学习者</p>
+        </div>
+        <div class="portrait">
+          <div class="portrait-top"><span>THE HUMAN BEHIND THE IDEAS</span><span aria-hidden="true">＋</span></div>
+          <!-- 自包含 SVG 个人 IP 插画，可替换为真实头像。 -->
+          <svg class="portrait-art" viewBox="0 0 460 500" role="img" aria-labelledby="avatar-title avatar-desc" preserveAspectRatio="xMidYMid slice">
+            <title id="avatar-title">个人 IP 数字形象</title><desc id="avatar-desc">浅绿色背景中，一位身穿深色上衣、戴圆框眼镜的创作者插画。</desc>
+            <defs><linearGradient id="sweater" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3c4440"/><stop offset="1" stop-color="#171d1a"/></linearGradient><linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2dac4"/><stop offset="1" stop-color="#d6b495"/></linearGradient><radialGradient id="halo"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+            <circle cx="230" cy="220" r="205" fill="url(#halo)"/><circle cx="230" cy="230" r="142" fill="none" stroke="#c7cebf" stroke-width="1"/><circle cx="230" cy="230" r="172" fill="none" stroke="#d8ddd1" stroke-dasharray="3 8"/>
+            <ellipse cx="230" cy="455" rx="140" ry="19" fill="#c8cfc1" opacity=".6"/>
+            <path d="M94 459 C97 366 129 329 185 316 L275 316 C331 329 363 366 366 459Z" fill="url(#sweater)"/>
+            <path d="M202 278 H258 V330 Q230 353 202 330Z" fill="url(#skin)"/><path d="M187 317 Q230 356 273 317 L286 337 Q230 382 174 337Z" fill="#29312c"/><path d="M147 453 L157 377 M313 453 L303 377" stroke="#505950" stroke-width="2" opacity=".45"/>
+            <ellipse cx="155" cy="223" rx="16" ry="24" fill="#dfbda0"/><ellipse cx="305" cy="223" rx="16" ry="24" fill="#dfbda0"/>
+            <path d="M156 178 Q156 112 230 108 Q304 112 304 178 L298 248 Q290 302 230 316 Q170 302 162 248Z" fill="url(#skin)"/>
+            <path d="M154 210 Q134 155 162 120 Q183 85 229 92 Q282 82 309 126 Q326 162 307 212 L295 174 Q265 178 251 151 Q215 181 166 174 L165 214Z" fill="#252a26"/><path d="M172 137 Q203 108 243 116 M252 116 Q282 120 292 145" fill="none" stroke="#444b42" stroke-width="5" stroke-linecap="round"/>
+            <g fill="none" stroke="#424840" stroke-width="4"><rect x="169" y="199" width="50" height="37" rx="14"/><rect x="241" y="199" width="50" height="37" rx="14"/><path d="M219 212 Q230 207 241 212 M156 205 L169 208 M291 208 L304 205"/></g>
+            <g fill="#373c34"><ellipse cx="197" cy="217" rx="3.5" ry="5"/><ellipse cx="263" cy="217" rx="3.5" ry="5"/></g><path d="M230 221 L225 245 Q230 249 236 245" fill="none" stroke="#bb967a" stroke-width="2.5" stroke-linecap="round"/><path d="M212 266 Q230 279 248 266" fill="none" stroke="#996f57" stroke-width="3" stroke-linecap="round"/><path d="M180 203 L195 203 M252 203 L267 203" stroke="#fff" stroke-width="2" opacity=".5"/>
+            <rect x="261" y="383" width="31" height="16" rx="4" fill="#c7d3b7"/><text x="276.5" y="394.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#36422f">BUILD</text>
+            <g transform="translate(346 124) rotate(12)"><rect width="46" height="46" rx="13" fill="#fff" fill-opacity=".9" stroke="#e1e5dc"/><path d="M15 23H31 M23 15V31 M18 18L28 28 M18 28L28 18" stroke="#69775c" stroke-width="2"/></g>
+            <g transform="translate(62 288) rotate(-10)"><rect width="56" height="40" rx="12" fill="#fff" fill-opacity=".9" stroke="#e1e5dc"/><text x="28" y="26" text-anchor="middle" font-size="17" font-family="monospace" fill="#69775c">&lt;/&gt;</text></g>
+          </svg>
+          <a class="portrait-label" href="#about"><span><strong data-profile="name">你的名字</strong><small>THINKER. BUILDER. EXPLORER.</small></span><span class="portrait-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="hero-bottom"><div class="hero-topics"><span>ARTIFICIAL INTELLIGENCE</span><span>PRODUCT DESIGN</span><span>OPEN SOURCE</span></div><a href="#about" aria-label="向下浏览个人介绍">SCROLL ↓</a></div>
+    </section>
+    <!-- 03 / 个人介绍 -->
+    <section class="section" id="about" aria-labelledby="about-title"><div class="container about-layout">
+      <div><p class="eyebrow">01 / About me</p><h2 class="large-heading" id="about-title">好奇心驱动，<br>创造力落地。</h2></div>
+      <div><div class="about-copy"><p>我是一名关注 <strong>AI 应用与数字产品</strong>的独立创造者。喜欢从真实的问题出发，把模糊的想法变成可以体验、可以使用的作品。</p><p>在这里，我分享项目实践、产品观察与学习笔记。相信好的工具能让复杂的事情变得简单，也相信持续的小步探索，会带来新的可能。</p></div><div class="principles"><div class="principle"><span>01 / THINK</span><h3>从问题出发</h3></div><div class="principle"><span>02 / BUILD</span><h3>在实践中验证</h3></div><div class="principle"><span>03 / SHARE</span><h3>让经验被看见</h3></div></div></div>
+    </div></section>
+    <!-- 04 / AI 项目 -->
+    <section class="section" id="projects" aria-labelledby="projects-title"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">02 / Selected projects</p><h2 id="projects-title">把可能性，变成可用的产品。</h2></div><p class="section-description">从一个问题开始，探索 AI 在日常工作与生活中的应用。以下为项目展示示例。</p></div>
+      <div class="projects-grid">
+        <article class="project"><div class="project-visual visual-green" aria-hidden="true"><span class="visual-index">PROJECT / 001</span><div class="mini-window"><div class="window-top"><i></i><i></i><i></i></div><div class="mini-chat">帮我整理今天的灵感。</div><div class="mini-chat answer"><div class="mini-line"></div><div class="mini-line" style="width:80%"></div><div class="mini-line" style="width:55%"></div></div></div></div><div class="project-content"><span class="project-category">AI ASSISTANT · 示例项目</span><h3>灵感助手</h3><p>将零散的想法整理成清晰的提纲，让每一次灵感都有继续生长的空间。</p><div class="project-tags"><span>对话交互</span><span>内容整理</span><span>AI</span></div><details><summary>查看项目构想</summary><p>输入语音转写或文字笔记，辅助完成主题归类、重点提取与行动项整理。可在此替换为你的实际产品介绍、演示地址和开发过程。</p></details></div></article>
+        <article class="project"><div class="project-visual visual-blue" aria-hidden="true"><span class="visual-index">PROJECT / 002</span><div class="flow"><span class="flow-node">≡</span><span class="flow-connector"></span><span class="flow-node center">AI</span><span class="flow-connector"></span><span class="flow-node">✓</span></div></div><div class="project-content"><span class="project-category">AUTOMATION · 示例项目</span><h3>轻量工作流</h3><p>连接信息收集、整理与输出，把重复的工作变成一条顺畅的自动化流程。</p><div class="project-tags"><span>自动化</span><span>工作流</span><span>效率工具</span></div><details><summary>查看项目构想</summary><p>设计从表单输入到内容整理、再到人工确认的工作流程。可在此展示你的流程图、实际使用场景与可复用模板。</p></details></div></article>
+        <article class="project"><div class="project-visual visual-orange" aria-hidden="true"><span class="visual-index">PROJECT / 003</span><div class="note-stack"><div class="note-front"><b>Aa.</b><div class="mini-line"></div><div class="mini-line" style="width:85%"></div><div class="mini-line" style="width:60%"></div></div></div></div><div class="project-content"><span class="project-category">KNOWLEDGE TOOL · 示例项目</span><h3>第二大脑</h3><p>把阅读、笔记与实践连接起来，让收藏的信息成为可以再次使用的知识。</p><div class="project-tags"><span>知识管理</span><span>检索</span><span>个人成长</span></div><details><summary>查看项目构想</summary><p>按主题管理资料，为笔记补充摘要、来源与关联内容。可在此展示你的知识整理方法、检索体验与产品截图。</p></details></div></article>
+      </div>
+    </div></section>
+    <!-- 05 / 产品知识库 -->
+    <section class="section" id="knowledge" aria-labelledby="knowledge-title"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">03 / Knowledge library</p><h2 id="knowledge-title">思考的痕迹，也是成长的路径。</h2></div><p class="section-description">关于产品、AI 与创造的简短笔记。点击条目，展开阅读。</p></div>
+      <div class="knowledge-list">
+        <details class="knowledge-item"><summary><span class="knowledge-number">01</span><span class="knowledge-category">产品思考</span><span class="knowledge-title">开始做产品前，先把问题说清楚</span><span class="knowledge-plus" aria-hidden="true">＋</span></summary><div class="knowledge-body">先写下三个答案：谁遇到了问题？问题在什么场景出现？他们现在怎样解决？例如，“做一个笔记工具”是方案，“阅读后很难找到之前记录的观点”才是具体问题。先明确问题，再决定是否需要增加功能。</div></details>
+        <details class="knowledge-item"><summary><span class="knowledge-number">02</span><span class="knowledge-category">AI 实践</span><span class="knowledge-title">把一次 AI 对话，整理成可以复用的流程</span><span class="knowledge-plus" aria-hidden="true">＋</span></summary><div class="knowledge-body">记录任务目标、输入材料、处理步骤和输出格式，再用不同案例检查结果。如果每周都要整理阅读笔记，可以固定为“原文要点 → 主题归类 → 个人思考”的结构，同时保留人工核对环节。</div></details>
+        <details class="knowledge-item"><summary><span class="knowledge-number">03</span><span class="knowledge-category">设计观察</span><span class="knowledge-title">好的界面，让下一步行动更容易被发现</span><span class="knowledge-plus" aria-hidden="true">＋</span></summary><div class="knowledge-body">一个页面可以承载很多信息，但每个区域应有清楚的重点。用标题建立层级，用间距组织内容，用明确的按钮文字说明下一步会发生什么。在手机上检查时，也要关注文字大小、触控范围和阅读顺序。</div></details>
+        <details class="knowledge-item"><summary><span class="knowledge-number">04</span><span class="knowledge-category">独立创造</span><span class="knowledge-title">从一个足够小、可以完成的版本开始</span><span class="knowledge-plus" aria-hidden="true">＋</span></summary><div class="knowledge-body">选择一个明确的场景，先完成能解决核心问题的版本。邀请真实使用者尝试，观察他们在哪一步停下、重复操作或产生疑问。根据这些反馈调整下一步，让每一次改动都有依据。</div></details>
+      </div>
+    </div></section>
+    <!-- 06 / GitHub -->
+    <section class="section" id="github" aria-labelledby="github-title"><div class="container"><div class="github-panel">
+      <div><p class="eyebrow">04 / Open source</p><h2 class="large-heading" id="github-title">想法开放，<br>创造不止。</h2><p>用代码记录探索，用分享连接同路人。这里可以放置你的开源项目、实验作品与开发记录。</p><a class="button" data-github-link href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="访问 GitHub，在新标签页打开">访问 GitHub <span aria-hidden="true">↗</span></a></div>
+      <div class="code-window"><div class="code-title" aria-hidden="true"><i></i><i></i><i></i><span>hello-world.js</span></div><pre aria-label="开发者宣言代码示例"><code><span class="syntax-gray">// Stay curious. Keep building.</span>
+<span class="syntax-purple">const</span> creator = {
+  mindset: <span class="syntax-green">"保持好奇"</span>,
+  focus: [<span class="syntax-green">"AI"</span>, <span class="syntax-green">"Product"</span>],
+  approach: <span class="syntax-green">"从想法到实践"</span>,
+  sharing: <span class="syntax-purple">true</span>
+};
+
+<span class="syntax-purple">function</span> build() {
+  <span class="syntax-purple">return</span> <span class="syntax-green">"Make something useful."</span>;
+}</code></pre></div>
+    </div></div></section>
+    <!-- 07 / 合作联盟 -->
+    <section class="section" id="alliance" aria-labelledby="alliance-title"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">05 / Better together</p><h2 id="alliance-title">一个人的想法，一群人的可能。</h2></div><p class="section-description">欢迎创造者、开发者与有趣的团队，一起交流、实验和完成作品。</p></div>
+      <div class="alliance-grid"><article class="alliance-card"><span class="alliance-icon" aria-hidden="true">⌘</span><h3>产品共创</h3><p>从需求讨论到原型设计，一起探索有价值的应用场景，让想法逐渐清晰。</p><a class="text-link" href="#contact">聊聊你的想法 <span aria-hidden="true">↗</span></a></article><article class="alliance-card"><span class="alliance-icon" aria-hidden="true">↗</span><h3>内容交流</h3><p>围绕 AI、产品与个人成长，分享实践经验，碰撞新的思考与表达。</p><a class="text-link" href="#contact">开启一次交流 <span aria-hidden="true">↗</span></a></article><article class="alliance-card"><span class="alliance-icon" aria-hidden="true">∞</span><h3>开源协作</h3><p>参与工具开发、完善使用文档，或共同维护一个值得长期投入的小项目。</p><a class="text-link" href="#contact">一起做点什么 <span aria-hidden="true">↗</span></a></article></div>
+    </div></section>
+    <!-- 08 / 联系方式 -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title"><div class="container">
+      <p class="eyebrow">06 / Say hello</p><h2 id="contact-title">下一个好想法，<br>也许从一句你好开始。</h2><p class="contact-description">合作提案、产品交流，或只是分享一个有趣的发现。<br>欢迎给我写信。</p>
+      <a class="email-link" data-email-link href="mailto:hello@example.com"><span data-profile="email">hello@example.com</span></a>
+      <div class="contact-actions"><a class="button" data-email-link href="mailto:hello@example.com">发送邮件 <span aria-hidden="true">↗</span></a><button class="button secondary" id="copy-email" type="button" hidden>复制邮箱 <span aria-hidden="true">＋</span></button></div>
+      <div class="contact-meta"><span>远程协作 · 保持连接</span><span>微信：<span data-profile="wechat">your_wechat_id</span></span></div>
+    </div></section>
+  </main>
+  <!-- 09 / 页脚版权 -->
+  <footer class="site-footer"><div class="container footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true">✳</span><span>© <span id="copyright-year">2026</span> <span data-profile="name">你的名字</span>. All rights reserved.</span></div><div class="footer-links"><span>用心创造，持续生长。</span><a href="#home">回到顶部 ↑</a></div></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script>
+    "use strict";
+    // 在此统一修改个人资料；项目、介绍与知识库内容可在上面的 HTML 中修改。
+    const PROFILE = {
+      name: "你的名字",
+      brand: "YOUR NAME.",
+      tagline: "用 AI 探索可能，用产品思维创造价值。",
+      status: "开放交流与合作",
+      email: "hello@example.com",
+      wechat: "your_wechat_id",
+      github: "https://github.com" // 替换成 https://github.com/你的用户名
+    };
+    document.querySelectorAll("[data-profile]").forEach((element) => {
+      const key = element.dataset.profile;
+      if (Object.prototype.hasOwnProperty.call(PROFILE, key)) element.textContent = PROFILE[key];
+    });
+    document.title = PROFILE.name + " · 个人主页";
+    document.querySelectorAll("[data-email-link]").forEach((link) => { link.href = "mailto:" + PROFILE.email.trim(); });
+    let githubUrl = "https://github.com";
+    try {
+      const configuredUrl = new URL(PROFILE.github);
+      if (configuredUrl.protocol === "https:" && configuredUrl.hostname === "github.com") githubUrl = configuredUrl.href;
+    } catch { /* 配置无效时保留 GitHub 官网链接。 */ }
+    document.querySelectorAll("[data-github-link]").forEach((link) => { link.href = githubUrl; });
+    document.getElementById("copyright-year").textContent = new Date().getFullYear();
+    // 手机导航
+    const menuButton = document.querySelector(".menu-toggle");
+    const navigation = document.getElementById("main-navigation");
+    const header = document.querySelector(".site-header");
+    function setMenuOpen(open) {
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? "关闭导航菜单" : "打开导航菜单");
+      navigation.classList.toggle("open", open);
+    }
+    menuButton.addEventListener("click", () => setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true"));
+    navigation.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenuOpen(false)));
+    document.addEventListener("click", (event) => { if (!header.contains(event.target)) setMenuOpen(false); });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") { setMenuOpen(false); menuButton.focus(); }
+    });
+    const desktopMedia = window.matchMedia("(min-width: 761px)");
+    function resetMenuOnDesktop(event) { if (event.matches) setMenuOpen(false); }
+    if (typeof desktopMedia.addEventListener === "function") desktopMedia.addEventListener("change", resetMenuOnDesktop);
+    else if (typeof desktopMedia.addListener === "function") desktopMedia.addListener(resetMenuOnDesktop);
+    document.documentElement.classList.add("js");
+    // 消息提示
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(message) {
+      window.clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add("show");
+      toastTimer = window.setTimeout(() => { toast.classList.remove("show"); toast.textContent = ""; }, 3500);
+    }
+    // 本地文件模式下的复制降级处理
+    function fallbackCopy(text) {
+      const textarea = document.createElement("textarea");
+      const previouslyFocused = document.activeElement;
+      const selection = window.getSelection();
+      const savedRanges = [];
+      if (selection) for (let index = 0; index < selection.rangeCount; index++) savedRanges.push(selection.getRangeAt(index).cloneRange());
+      textarea.value = text;
+      textarea.readOnly = true;
+      textarea.setAttribute("aria-label", "待复制的邮箱地址");
+      textarea.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0;font-size:16px;";
+      document.body.appendChild(textarea);
+      let success = false;
+      try {
+        textarea.focus({ preventScroll: true });
+        textarea.select();
+        textarea.setSelectionRange(0, text.length);
+        success = document.execCommand("copy");
+      } catch { success = false; }
+      finally {
+        textarea.remove();
+        if (selection) { selection.removeAllRanges(); savedRanges.forEach((range) => selection.addRange(range)); }
+        if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus({ preventScroll: true });
+      }
+      return success;
+    }
+    const copyButton = document.getElementById("copy-email");
+    copyButton.hidden = false;
+    copyButton.addEventListener("click", async () => {
+      let copied = false;
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(PROFILE.email.trim()); copied = true; }
+        catch { copied = false; }
+      }
+      if (!copied) copied = fallbackCopy(PROFILE.email.trim());
+      showToast(copied ? "邮箱已复制，期待收到你的消息。" : "复制未成功，请长按或选中页面上的邮箱手动复制。");
+    });
+  </script>
+</body>
+</html>
